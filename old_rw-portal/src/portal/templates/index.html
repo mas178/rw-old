@@ -1,0 +1,27 @@
+{% extends "common/layout.html" %}
+{% import 'common/widgets.html' as widgets %}
+
+{% block content %}
+  {{ widgets.header(categories=categories, current_user=current_user) }}
+
+  <!-- Content Header (Page header) -->
+  {{ widgets.contents_header('業務アプリケーション一覧', '興味のある業務を選んで試してみましょう。') }}
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <section class="col-lg-9 connectedSortable">
+        {% for process in processes %}
+          <div>
+            {{ widgets.box(process=process) }}
+          </div>
+        {% else %}
+          <div class="callout callout-warning">
+            <h4>検索条件に一致する業務アプリケーションが見つかりませんでした。</h4>
+
+            <p>条件を変更して、もう一度検索してみて下さい。<a href="/">Home</a></p>
+          </div>
+        {% endfor %}
+      </section>
+    </div>
+  </section>
+{% endblock %}

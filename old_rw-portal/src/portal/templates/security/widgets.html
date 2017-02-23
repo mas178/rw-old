@@ -1,0 +1,62 @@
+{% macro form_field(field) %}
+  {% if field.name == 'first_name' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="First Name", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'last_name' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="Last Name", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'tenant_name' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="Company Name", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-home form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'email' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="Email", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'password' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="Password", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'password_confirm' %}
+    <div class="form-group has-feedback">
+      {{ field(class_="form-control", placeholder="Retype password", **kwargs)|safe }}
+      <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+    </div>
+  {% elif field.name == 'remember' %}
+    <div class="col-xs-8">
+      <div class="checkbox icheck">
+        <label>
+          <input id="remember" name="remember" type="checkbox" value="y"> Remember Me
+        </label>
+      </div>
+    </div>
+  {% elif field.name == 'submit' %}
+    <div class="col-xs-4">
+      <input id="submit" name="submit" type="submit" value="Register" class="btn btn-primary btn-block btn-flat">
+    </div>
+  {% endif %}
+  {% if field.errors %}
+    <ul>
+      {% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{% macro social_link() %}
+  <div class="social-auth-links text-center">
+    <p>- OR -</p>
+    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+      Facebook</a>
+    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+      Google+</a>
+  </div>
+{% endmacro %}

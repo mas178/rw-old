@@ -1,0 +1,130 @@
+{% extends "common/layout.html" %}
+{% import 'common/widgets.html' as widgets %}
+
+{% block content %}
+  {{ widgets.header(categories=categories) }}
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    {{ widgets.contents_header(process.title, "") }}
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <section class="col-lg-9 connectedSortable">
+          <p>{{ process.name }}</p>
+          <p>{{ process.description }}</p>
+          <p>{{ process.image_url }}</p>
+          <a href="/process/purchase/{{ process.id }}" type="button" class="btn btn-block btn-warning btn-lg">購入する</a>
+        </section>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block custom_script %}
+  <script>
+    console.log('Start process.html');
+
+    var DOMAIN = 'http://0.0.0.0:8080';
+
+    var deploymentForm = function (processName, resourceName, resource, tenantId) {
+      console.log('Start deploymentForm');
+      var formData = new FormData();
+      var fileName = resourceName.replace(/\//g, "_");
+      formData.append('deployment-source', 'flaskからの挑戦状');
+      formData.append('deployment-name', processName);
+      formData.append('data', new File([resource], fileName, { type: "application/octet-stream" }));
+      formData.append('tenant-id', tenantId);
+      console.log('formData:', formData);
+      console.log('tenant-id:', formData.get('tenant-id'));
+      console.log('data:', formData.get('data'));
+      console.log('deployment-name:', formData.get('deployment-name'));
+      console.log('End deploymentForm');
+      return formData;
+    };
+
+    $.ajax({
+      url: DOMAIN + '/camunda/api/engine/engine/default/deployment',
+      type: 'GET',
+      xhrFields: { withCredentials: true },
+      success: function (dataDeploy) {
+        console.log('★★★Success: /deployment');
+        console.log(dataDeploy);
+        console.log('deployment id: ', dataDeploy[0].id);
+        console.log('deployment name: ', dataDeploy[0].name);
+        console.log('source: ', dataDeploy[0].source);
+        console.log('deploymentTime', dataDeploy[0].deploymentTime);
+        console.log('links', dataDeploy[0].links);
+        console.log('tenantId', dataDeploy[0].tenantId);
+
+        $.ajax({
+          url: DOMAIN + '/camunda/api/engine/engine/default/deployment/' + dataDeploy[0].id + '/resources',
+          type: 'GET',
+          xhrFields: { withCredentials: true },
+          success: function (dataResources) {
+            console.log('★★★Success: /deployment/{id}/resources');
+            console.log(dataResources);
+            console.log('resource id: ', dataResources[0].id);
+            console.log('resource name: ', dataResources[0].name);
+            console.log('deploymentId: ', dataResources[0].deploymentId);
+
+            $.ajax({
+              url: DOMAIN + '/camunda/api/engine/engine/default/deployment/' + dataDeploy[0].id + '/resources/' + dataResources[0].id + '/data',
+              type: 'GET',
+              xhrFields: { withCredentials: true },
+              success: function (dataResource) {
+                console.log('★★★Success: /deployment/{id}/resources/{resourceId}/data');
+                console.log('resource: ', dataResource);
+                var strXml = (new XMLSerializer()).serializeToString(dataResource);
+                console.log('resource: ', strXml);
+
+                /*
+                 $.ajax({
+                 url: 'http://localhost:8080/camunda/api/engine/engine/default/deployment/create',
+                 type: 'POST',
+                 xhrFields: { withCredentials: true },
+                 data: deploymentForm(dataDeploy[0].name, dataResources[0].name, strXml, dataDeploy[0].tenantId),
+                 contentType: false,
+                 processData: false,
+                 success: function (data) {
+                 console.log('★★★Success: /deployment/create');
+                 console.log('data: ', data);
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 console.log("Error: /deployment/create");
+                 console.log('XMLHttpRequest: ', XMLHttpRequest);
+                 console.log('textStatus: ', textStatus);
+                 console.log('errorThrown.message: ', errorThrown);
+                 }
+                 });
+                 */
+
+              },
+              error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Error: /deployment/{id}/resources/{resourceId}/data");
+                console.log('XMLHttpRequest: ', XMLHttpRequest);
+                console.log('textStatus: ', textStatus);
+                console.log('errorThrown.message: ', errorThrown);
+              }
+            });
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Error: /deployment/{id}/resources');
+            console.log('XMLHttpRequest: ', XMLHttpRequest);
+            console.log('textStatus: ', textStatus);
+            console.log('errorThrown.message: ', errorThrown);
+          }
+        });
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        console.log('Error: /deployment');
+        console.log('XMLHttpRequest: ', XMLHttpRequest);
+        console.log('textStatus: ', textStatus);
+        console.log('errorThrown.message: ', errorThrown);
+      }
+    });
+
+    console.log('End process.html');
+  </script>
+{% endblock %}

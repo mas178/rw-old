@@ -1,0 +1,85 @@
+{% import 'common/widgets.html' as widgets %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ widgets.title() }}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../static/plugins/select2/select2.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../static/dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../static/plugins/iCheck/square/blue.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../static/dist/css/skins/skin-rw-blue.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="{{ widgets.body_style() }}">
+    <div class="wrapper">
+      <div class="content-wrapper">
+        {% block content %}{% endblock %}
+      </div>
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 0.0.1
+        </div>
+        <strong>Copyright &copy; 2016 <a href="http://rational.works" target="_blank">Rational Works, Inc</a>.</strong> All rights
+        reserved.
+      </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery 2.2.3 -->
+    <script src="../static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Select2 -->
+    <script src="../static/plugins/select2/select2.full.min.js"></script>
+    <script>
+      $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+      });
+    </script>
+    <!-- iCheck -->
+    <script src="../static/plugins/iCheck/icheck.min.js"></script>
+    <script>
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+      });
+    </script>
+    <!-- Sparkline -->
+    <script src="../static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="../static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="../static/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../static/dist/js/app.min.js"></script>
+    {% block custom_script %}{% endblock %}
+  </body>
+</html>

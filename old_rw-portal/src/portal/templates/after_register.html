@@ -1,0 +1,23 @@
+{% extends "common/layout.html" %}
+{% import 'common/widgets.html' as widgets %}
+
+{% block content %}
+  {{ widgets.header(categories=categories) }}
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    {{ widgets.contents_header('仮登録完了', "") }}
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <p>
+          仮登録が完了しました。
+        </p>
+        <p>
+          あなたが前画面で入力したメールアドレス宛に、本登録の方法が記載されたメールが間もなく送信されます。
+        </p>
+      </div>
+    </section>
+  </div>
+{% endblock %}

@@ -1,0 +1,288 @@
+{% macro calendar_default() -%}
+  <!-- Calendar -->
+  <div class="box box-solid bg-green-gradient">
+    <div class="box-header">
+      <i class="fa fa-calendar"></i>
+
+      <h3 class="box-title">Calendar</h3>
+      <!-- tools box -->
+      <div class="pull-right box-tools">
+        <!-- button with a dropdown -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bars"></i></button>
+          <ul class="dropdown-menu pull-right" role="menu">
+            <li><a href="#">Add new event</a></li>
+            <li><a href="#">Clear events</a></li>
+            <li class="divider"></li>
+            <li><a href="#">View calendar</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-success btn-sm" data-widget="remove">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <!-- /. tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <!--The calendar -->
+      <div id="calendar" style="width: 100%"></div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer text-black">
+      <div class="row">
+        <div class="col-sm-6">
+          <!-- Progress bars -->
+          <div class="clearfix">
+            <span class="pull-left">Task #1</span>
+            <small class="pull-right">90%</small>
+          </div>
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+          </div>
+
+          <div class="clearfix">
+            <span class="pull-left">Task #2</span>
+            <small class="pull-right">70%</small>
+          </div>
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <div class="clearfix">
+            <span class="pull-left">Task #3</span>
+            <small class="pull-right">60%</small>
+          </div>
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+          </div>
+
+          <div class="clearfix">
+            <span class="pull-left">Task #4</span>
+            <small class="pull-right">40%</small>
+          </div>
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+  </div>
+  <!-- /.box -->
+{%- endmacro %}
+
+{% macro contents_header(main_message='タイトル未設定', sub_message='') -%}
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      {{ main_message }}
+      <small>{{ sub_message }}</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">{{ main_message }}</li>
+    </ol>
+  </section>
+{%- endmacro %}
+
+{% macro small_box(color='bg-aqua', icon='ion-bag', header='', body='') -%}
+  <!-- small box -->
+  <div class="small-box {{ color }}">
+    <div class="inner">
+      <h4>ハイバリュー人材採用プロセス</h4>
+      <p>{{ body }}</p>
+    </div>
+    <div class="icon">
+      <i class="ion {{ icon }}"></i>
+    </div>
+    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+{%- endmacro %}
+
+{% macro tabbed_box() -%}
+  <!-- Custom tabs (Charts with tabs)-->
+  <div class="nav-tabs-custom">
+    <!-- Tabs within a box -->
+    <ul class="nav nav-tabs pull-right">
+      <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+      <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+      <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+    </ul>
+    <div class="tab-content no-padding">
+      <!-- Morris chart - Sales -->
+      <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+      <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+    </div>
+  </div>
+  <!-- /.nav-tabs-custom -->
+{%- endmacro %}
+
+{% macro box(process=None) -%}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{ process.name }}</h3>
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="隠す">
+          <i class="fa fa-times"></i>
+        </button>
+      </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
+    <a href="/process/{{ process.id }}">
+      <div class="box-body">
+        <p>{{ process.description }}</p>
+      </div><!-- /.box-body -->
+    </a>
+    <div class="box-footer">
+      {% for category in process.categories %}
+        <span class="label label-default"><a href="/?category={{ category.id }}">{{ category.name }}</a></span>
+      {% endfor %}
+    </div><!-- box-footer -->
+  </div><!-- /.box -->
+{%- endmacro %}
+
+{% macro carousel() -%}
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="http://placehold.it/900x500/39CCCC/ffffff&text=Rational+Works" alt="First slide">
+
+        <div class="carousel-caption">
+          First Slide
+        </div>
+      </div>
+      <div class="item">
+        <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=Create" alt="Second slide">
+
+        <div class="carousel-caption">
+          Second Slide
+        </div>
+      </div>
+      <div class="item">
+        <img src="http://placehold.it/900x500/f39c12/ffffff&text=More+Challenges" alt="Third slide">
+
+        <div class="carousel-caption">
+          Third Slide
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+      <span class="fa fa-angle-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+      <span class="fa fa-angle-right"></span>
+    </a>
+  </div>
+{%- endmacro %}
+
+{% macro title() -%}
+  {% if request.path == '/' %}
+    Rational Works
+  {% elif request.path.startswith('/process') %}
+    Rational Works | プロセス詳細
+  {% elif request.path.startswith('/login') %}
+    Rational Works | ログイン
+  {% elif request.path.startswith('/register') %}
+    Rational Works | 会員登録
+  {% endif %}
+{%- endmacro %}
+
+{% macro body_style() %}
+  {% if request.path.startswith('/login') %}
+    skin-blue hold-transition login-page layout-top-nav fixed
+  {% elif request.path.startswith('/register') %}
+    skin-blue hold-transition register-page layout-top-nav fixed
+  {% else %}
+    skin-blue layout-top-nav fixed
+  {% endif %}
+{% endmacro %}
+
+{% macro header(categories=[], current_user=None) -%}
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header" style="width: 15em;">
+          <a href="/" class="navbar-brand"><b>Rational</b>Works</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <form class="navbar-form navbar-left" role="search" method="get" action="/">
+
+            <div class="form-group">
+              <select class="form-control select2" name="category" style="width: 14em;">
+                <option value="0">業務カテゴリを選ぶ</option>
+                {% for category in categories %}
+                  {% if category.id|string() == request.args.get('category', default='0') %}
+                    <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                  {% else %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" name="free_word" class="form-control" placeholder="フリーワード" value="{{ request.args.get('free_word', default='') }}" style="width: 14em;">
+                <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+              </div>
+            </div>
+
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://0.0.0.0:8080/camunda/app/cockpit/default/" target="_blank">コクピット</a></li>
+            <li><a href="http://0.0.0.0:8080/camunda/app/tasklist/default/" target="_blank">タスクリスト</a></li>
+            {% if not current_user.is_authenticated %}
+              <li><a href="/register">会員登録</a></li>
+              <li><a href="/login">ログイン</a></li>
+            {% endif %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">使い方 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Portal</a></li>
+                <li><a href="#">Cockpit</a></li>
+                <li><a href="#">TaskList</a></li>
+                <li><a href="#">Admin</a></li>
+                <li class="divider"></li>
+                <li><a href="#">サービス概要</a></li>
+              </ul>
+            </li>
+            {% if current_user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  {{ current_user.first_name }} {{ current_user.last_name }}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Setting</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/logout">Log off</a></li>
+                </ul>
+              </li>
+            {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </header>
+{%- endmacro %}
