@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/"
+      lang="ja"
+      layout:decorator="layout"
+      th:with="
+        currentUrl=${#httpServletRequest.requestURI},
+        isCreate=${#strings.startsWith(currentUrl,'/task/create')},
+        title=${isCreate} ? 'タスク作成' : 'タスク詳細',
+        buttonLabel=${isCreate} ? '作成' : '更新',
+        action=${isCreate} ? @{/task} : @{/task/{id}(id=${id})}">
+  <head>
+    <title th:text="${title}">タスク詳細</title>
+  </head>
+  <body>
+    <div layout:fragment="content" class="col-sm-12">
+      <h2 th:text="${title}">タスク詳細</h2>
+      <div class="register-form">
+        <form th:action="${currentUrl}" method="get" id="formToGetJobs"></form>
+
+        <form th:action="${action}" th:object="${taskForm}" method="post" class="form-signup form-horizontal">
+          <fieldset>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error has-feedback'">
+              <label for="username" class="col-sm-2 control-label">担当者</label>
+              <div class="col-sm-10">
+                <select id="username" name="username" class="form-control" autofocus="autofocus">
+                  <option th:each="user : ${users}" th:value="${user.username}" th:selected="${user.username} == *{username}" th:inline="text">
+                    [[${user.username}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error has-feedback'">
+              <label for="name" class="col-sm-2 control-label">タスク名</label>
+              <div class="col-sm-10">
+                <input type="text" id="name" name="name" th:field="*{name}"
+                       class="form-control"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('statusId')}? 'has-error has-feedback'">
+              <label for="statusId" class="col-sm-2 control-label">ステータス</label>
+              <div class="col-sm-10">
+                <select id="statusId" name="statusId" class="form-control">
+                  <option th:each="status : ${statuses}" th:value="${status.id}" th:selected="${status.id} == *{statusId}" th:inline="text">
+                    [[${status.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('plannedTimestamp')}? 'has-error has-feedback'">
+              <label for="plannedTimestamp" class="col-sm-2 control-label">期限</label>
+              <div class="col-sm-10">
+                <input type="text" id="plannedTimestamp" name="plannedTimestamp" th:field="*{plannedTimestamp}" class="form-control date-picker"/>
+                <span th:if="${#fields.hasErrors('plannedTimestamp')}" th:errors="*{plannedTimestamp}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('plannedAction')}? 'has-error has-feedback'">
+              <label for="plannedAction" class="col-sm-2 control-label">内容(予定)</label>
+              <div class="col-sm-10">
+                <textarea id="plannedAction" name="plannedAction" th:field="*{plannedAction}" class="form-control"></textarea>
+                <span th:if="${#fields.hasErrors('plannedAction')}" th:errors="*{plannedAction}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('actualTimestamp')}? 'has-error has-feedback'">
+              <label for="actualTimestamp" class="col-sm-2 control-label">実施日</label>
+              <div class="col-sm-10">
+                <input type="text" id="actualTimestamp" name="actualTimestamp" th:field="*{actualTimestamp}" class="form-control date-picker"/>
+                <span th:if="${#fields.hasErrors('actualTimestamp')}" th:errors="*{actualTimestamp}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('actualAction')}? 'has-error has-feedback'">
+              <label for="actualAction" class="col-sm-2 control-label">内容(実績)</label>
+              <div class="col-sm-10">
+                <textarea id="actualAction" name="actualAction" th:field="*{actualAction}" class="form-control"></textarea>
+                <span th:if="${#fields.hasErrors('actualAction')}" th:errors="*{actualAction}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('applicantIds')}? 'has-error has-feedback'">
+              <label for="applicantIds" class="col-sm-2 control-label">関連求職者</label>
+              <div class="col-sm-10">
+                <select id="applicantIds" name="applicantIds" class="form-control" multiple="multiple">
+                  <option th:each="applicant : ${applicants}" th:value="${applicant.id}" th:field="*{applicantIds}" th:inline="text">
+                    [[${applicant.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('applicantIds')}" th:errors="*{applicantIds}">error!</span>
+              </div>
+            </div>
+
+            <div id="div-company" class="form-group" th:classappend="${#fields.hasErrors('companyIds')}? 'has-error has-feedback'">
+              <label for="companyIds" class="col-sm-2 control-label">関連求人組織</label>
+              <div class="col-sm-10">
+                <select id="companyIds" name="companyIds" class="form-control" multiple="multiple">
+                  <option th:each="company : ${companies}" th:value="${company.id}" th:field="*{companyIds}" th:inline="text">
+                    [[${company.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('companyIds')}" th:errors="*{companyIds}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('jobIds')}? 'has-error has-feedback'">
+              <label for="jobIds" class="col-sm-2 control-label">関連求人案件</label>
+              <div class="col-sm-10">
+                <select id="jobIds" name="jobIds" class="form-control" multiple="multiple">
+                  <option th:each="job : ${jobs}" th:value="${job.id}" th:field="*{jobIds}" th:inline="text">
+                    [[${job.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('jobIds')}" th:errors="*{jobIds}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('applicationIds')}? 'has-error has-feedback'">
+              <label for="applicationIds" class="col-sm-2 control-label">関連応募</label>
+              <div class="col-sm-10">
+                <select id="applicationIds" name="applicationIds" class="form-control" multiple="multiple">
+                  <option th:each="application : ${applications}" th:value="${application.id}" th:field="*{applicationIds}" th:inline="text">
+                    [[${application.applicant.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('applicationIds')}" th:errors="*{applicationIds}">error!</span>
+              </div>
+            </div>
+
+            <!-- ボタン -->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <a th:href="@{/task}" class="btn btn-lg btn-default">一覧に戻る</a>
+                <input type="submit" value="更新" th:value="${buttonLabel}" class="btn btn-lg btn-danger"/>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

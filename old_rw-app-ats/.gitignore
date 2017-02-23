@@ -1,0 +1,11 @@
+target/
+.mvn/
+logs/**
+.log
+
+### IntelliJ IDEA ###
+.idea
+*.iml
+
+### Mac ###
+.DS_Store

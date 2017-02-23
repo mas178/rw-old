@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/"
+  lang="ja"
+  layout:decorator="layout">
+  <head>
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div layout:fragment="content" class="col-sm-12">
+      <h2>Dashboard</h2>
+      <ul>
+        <li>会社全体、および、担当者別の主要KPIを表示する。</li>
+        <li>期限の近いタスク一覧</li>
+        <li>期限切れタスク一覧</li>
+        <li>etc.</li>
+      </ul>
+      <h2>Rational Works からのお知らせ</h2>
+      <ul>
+        <li>当アプリは人材紹介エージェント向け Applicant Tracking System (ATS) の プロトタイプです。</li>
+        <li>当アプリ内に保存しているデータは仮のものです。</li>
+        <li>当アプリ内に保存しているデータは頻繁に、かつ、予告なく削除されます。</li>
+        <li>質問・要望・提案などがあれば、お気軽に稲葉(inaba@rational-works.jp)までお問い合わせ下さい。</li>
+      </ul>
+      <h4>現状のステータス</h4>
+      <ul>
+        <li>主要データのCRUができる</li>
+        <li>アラート機能は未実装</li>
+        <li>データのフィルタリング・ソート・ページネーション機能は未実装</li>
+        <li>ビジュアルデザインは未着手</li>
+      </ul>
+    </div>
+  </body>
+</html>

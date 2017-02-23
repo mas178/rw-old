@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/"
+      lang="ja"
+      layout:decorator="layout"
+      th:with="
+        isCreate=${#httpServletRequest.requestURI} == '/applicant/create',
+        title=${isCreate} ? '求職者作成' : '求職者詳細',
+        buttonLabel=${isCreate} ? '作成' : '更新',
+        action=${isCreate} ? @{/applicant} : @{/applicant/{id}(id=${id})}">
+  <head>
+    <title th:text="${title}">求職者詳細</title>
+  </head>
+  <body>
+    <div layout:fragment="content" class="col-sm-12">
+      <h2 th:text="${title}">求職者詳細</h2>
+      <div class="register-form">
+        <form th:action="${action}" th:object="${applicantForm}" method="post" class="form-signup form-horizontal">
+          <fieldset>
+
+            <div class="form-group">
+              <label for="id" class="col-sm-2 control-label">求職者ID</label>
+              <div class="col-sm-10">
+                <span id="id" th:text="*{id}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error has-feedback'">
+              <label for="name" class="col-sm-2 control-label">氏名</label>
+              <div class="col-sm-10">
+                <input type="text" id="name" name="name" th:field="*{name}"
+                       class="form-control" autofocus="autofocus"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('statusId')}? 'has-error has-feedback'">
+              <label for="statusId" class="col-sm-2 control-label">ステータス</label>
+              <div class="col-sm-10">
+                <select id="statusId" name="statusId" class="form-control">
+                  <option th:each="status : ${statuses}" th:value="${status.id}" th:selected="${status.id} == *{statusId}" th:inline="text">
+                    [[${status.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="createUserUsername" class="col-sm-2 control-label">データ作成者</label>
+              <div class="col-sm-10">
+                <span id="createUserUsername" th:text="*{createdBy}"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="updateUserUsername" class="col-sm-2 control-label">最終データ更新者</label>
+              <div class="col-sm-10">
+                <span id="updateUserUsername" th:text="*{updatedBy}"></span>
+              </div>
+            </div>
+
+            <!-- ボタン -->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <a th:href="@{/applicant}" class="btn btn-lg btn-default">一覧に戻る</a>
+                <input type="submit" value="更新" th:value="${buttonLabel}" class="btn btn-lg btn-danger"/>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

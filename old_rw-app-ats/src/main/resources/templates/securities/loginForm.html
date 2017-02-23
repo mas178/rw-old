@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/"
+      lang="ja"
+      layout:decorator="layout">
+  <head>
+    <title>ログインフォーム</title>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <div class="register-form">
+        <form th:action="@{/login}" th:object="${loginUserForm}" method="post" class="form-signin form-horizontal">
+          <fieldset>
+            <legend>ログインフォーム</legend>
+
+            <div th:if="${param.error}" class="alert alert-danger">
+              ユーザー名またはパスワードが正しくありません。
+            </div>
+
+            <!-- ユーザー名 -->
+            <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error has-feedback'">
+              <label for="username" class="col-sm-2 control-label">ユーザー名</label>
+              <div class="col-sm-10">
+                <input type="text" id="username" name="username" th:field="*{username}"
+                       class="form-control" placeholder="ユーザー名" autofocus="autofocus"/>
+                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+              </div>
+            </div>
+
+            <!-- パスワード -->
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error has-feedback'">
+              <label for="password" class="col-sm-2 control-label">パスワード</label>
+              <div class="col-sm-10">
+                <input type="password" id="password" name="password" th:field="*{password}"
+                       class="form-control" placeholder="パスワード"/>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+              </div>
+            </div>
+
+            <!-- ボタン -->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="ログイン" class="btn btn-lg btn-primary"/>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

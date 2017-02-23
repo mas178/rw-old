@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/"
+      lang="ja"
+      layout:decorator="layout"
+      th:with="
+        isCreate=${#httpServletRequest.requestURI} == '/job/create',
+        title=${isCreate} ? '求人案件作成' : '求人案件詳細',
+        buttonLabel=${isCreate} ? '作成' : '更新',
+        action=${isCreate} ? @{/job} : @{/job/{id}(id=${id})}">
+  <head>
+    <title th:text="${title}">求人案件詳細</title>
+  </head>
+  <body>
+    <div layout:fragment="content" class="col-sm-12">
+      <h2 th:text="${title}">求人案件詳細</h2>
+      <div class="register-form">
+        <form th:action="${action}" th:object="${jobForm}" method="post" class="form-signup form-horizontal">
+          <fieldset>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('companyId')}? 'has-error has-feedback'">
+              <label for="companyId" class="col-sm-2 control-label">求人組織名</label>
+              <div class="col-sm-10">
+                <select id="companyId" name="companyId" class="form-control">
+                  <option th:each="company : ${companies}" th:value="${company.id}" th:selected="${company.id} == *{companyId}" th:inline="text">
+                    [[${company.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error has-feedback'">
+              <label for="name" class="col-sm-2 control-label">求人案件</label>
+              <div class="col-sm-10">
+                <input type="text" id="name" name="name" th:field="*{name}"
+                       class="form-control" autofocus="autofocus"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('statusId')}? 'has-error has-feedback'">
+              <label for="statusId" class="col-sm-2 control-label">ステータス</label>
+              <div class="col-sm-10">
+                <select id="statusId" name="statusId" class="form-control">
+                  <option th:each="status : ${statuses}" th:value="${status.id}" th:selected="${status.id} == *{statusId}" th:inline="text">
+                    [[${status.name}]]
+                  </option>
+                </select>
+                <span th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}">error!</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <a th:href="@{/job}" class="btn btn-lg btn-default">一覧に戻る</a>
+                <input type="submit" value="更新" th:value="${buttonLabel}" class="btn btn-lg btn-danger"/>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
