@@ -1,0 +1,33 @@
+<form name="apply">
+  <div class="form-group">
+    <label for="lastName">氏</label>
+    <input id="lastName" class="form-control" cam-variable-type="String" cam-variable-name="lastName" name="lastName" readonly="true"/>
+    <label for="firstName">名</label>
+    <input id="firstName" class="form-control" cam-variable-type="String" cam-variable-name="firstName" name="firstName" readonly="true"/>
+    <label for="department">部署名</label>
+    <input id="department" class="form-control" cam-variable-type="String" cam-variable-name="department" name="department" readonly="true"/>
+    <label for="position">役職</label>
+    <input id="position" class="form-control" cam-variable-type="String" cam-variable-name="position" name="position" readonly="true"/>
+    <label for="amount">数量</label>
+    <select required
+            id="amount"
+            class="form-control"
+            name="amount"
+            cam-variable-name="amount"
+            cam-variable-type="String"
+            readonly="true">
+      <option value="100" checked>100枚</option>
+      <option value="200">200枚</option>
+      <option value="300">300枚</option>
+      <option value="400">400枚</option>
+      <option value="500">500枚</option>
+      <option value="600">600枚</option>
+      <option value="700">700枚</option>
+      <option value="800">800枚</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="result">承認します</label>
+    <input type="checkbox" id="result" class="form-control" cam-variable-type="Boolean" cam-variable-name="result" name="result"/>
+  </div>
+</form>

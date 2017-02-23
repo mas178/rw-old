@@ -1,0 +1,70 @@
+<h3>名刺発行申請フォーム</h3>
+<form name="apply">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">
+        <label>氏名</label>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-6">
+            <input id="lastName" class="form-control" cam-variable-type="String" cam-variable-name="lastName" name="lastName" placeholder="氏" required/>
+          </div>
+          <div class="col-md-6">
+            <input id="firstName" class="form-control" cam-variable-type="String" cam-variable-name="firstName" name="firstName" placeholder="名" required/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="department">部署名</label>
+      </div>
+      <div class="col-md-9">
+        <input id="department" class="form-control" cam-variable-type="String" cam-variable-name="department" name="department" placeholder="部署名" required/>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="position">役職</label>
+      </div>
+      <div class="col-md-9">
+        <input id="position" class="form-control" cam-variable-type="String" cam-variable-name="position" name="position" placeholder="役職" required/>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="amount">数量</label>
+      </div>
+      <div class="col-md-9">
+        <select required id="amount" class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount">
+          <option value="100" checked>100枚</option>
+          <option value="200">200枚</option>
+          <option value="300">300枚</option>
+          <option value="400">400枚</option>
+          <option value="500">500枚</option>
+          <option value="600">600枚</option>
+          <option value="700">700枚</option>
+          <option value="800">800枚</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="reviewer">承認者</label>
+      </div>
+      <div class="col-md-9">
+        <!-- ユーザー名のセレクトボックス化 -->
+        <input id="reviewer" class="form-control" cam-variable-type="String" cam-variable-name="reviewer" name="reviewer" placeholder="承認者" required/>
+      </div>
+    </div>
+  </div>
+</form>
