@@ -1,0 +1,17 @@
+<!-- # CE - camunda-cockpit-ui/client/scripts/reports/controllers/reports-view.html -->
+<div class="reports-wrapper">
+  <div class="container-fluid">
+    <div class="reports-type-wrapper"
+         cam-reports-type
+         report-data="reportData"
+         get-plugin-providers="getPluginProviders"
+         ng-if="!selectedReportId">
+    </div>
+
+    <div class="reports-plugin-wrapper"
+         cam-reports-plugin
+         report-data="reportData">
+    </div>
+  </div>
+</div>
+<!-- / CE - camunda-cockpit-ui/client/scripts/reports/controllers/reports-view.html -->

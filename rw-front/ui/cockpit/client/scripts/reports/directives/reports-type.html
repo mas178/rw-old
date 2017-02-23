@@ -1,0 +1,17 @@
+<!-- # CE - camunda-cockpit-ui/client/scripts/reports/directives/reports-type.html -->
+<div class="reports-type-selection">
+  <div ng-if="!plugins || !(plugins.length > 0)"
+       class="well no-reports-available">
+    <span class="glyphicon glyphicon-info-sign"></span>
+    No reports available.
+  </div>
+
+  <h3 ng-if="plugins">Available reports</h3>
+  <ul ng-if="plugins">
+    <li ng-repeat="provider in plugins">
+      <a ng-class="{active: selection.type === provider.id}"
+         ng-href="#/reports/{{ provider.id }}">{{ provider.label }}</a>
+    </li>
+  </ul>
+</div>
+<!-- / CE - camunda-cockpit-ui/client/scripts/reports/directives/reports-type.html -->

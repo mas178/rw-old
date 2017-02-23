@@ -1,0 +1,124 @@
+<!-- # CE - ui/cockpit/plugins/base/app/views/processesDashboard/process-definitions.html -->
+<div class="deployed-processes">
+  <h3 ng-if="processDefinitionData && processDefinitionData.length">
+    {{ processDefinitionData.length }} process {{ (processDefinitionData.length > 1 ? 'definitions' : 'definition') }} deployed
+  </h3>
+
+  <tabset ng-if="processDefinitionData && processDefinitionData.length">
+    <tab heading="List"
+         select="selectTab('list')">
+      <table class="process-definitions-list cam-table">
+        <thead>
+          <tr>
+            <th class="state">State</th>
+            <th class="instances">Running Instances</th>
+            <th class="name">Name</th>
+            <th class="availability">Availability</th>
+            <th ng-if="hasHistoryPlugin"
+                class="history-link">History view
+            </th>
+            <th ng-if="hasReportPlugin"
+                class="report-link">Report
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="pd in processDefinitionData | orderBy:['name || key','tenantId']:false">
+            <td class="state">
+              <div ng-if="pd.incidents.length > -1" state-circle incidents="pd.incidents"></div>
+              <div ng-if="pd.incidents == undefined">
+                <span class="glyphicon glyphicon-refresh animate-spin"></span>
+              </div>
+            </td>
+
+            <td ng-if="pd.instances >= 0" class="instances">
+              {{ pd.instances }}
+            </td>
+            <td ng-if="pd.instances == undefined">
+              <span class="glyphicon glyphicon-refresh animate-spin"></span>
+            </td>
+
+            <td class="name">
+              <a href="#/process-definition/{{ pd.id }}">
+                {{ pd.name || pd.key }}
+              </a>
+            </td>
+
+            <!--<td class="tenant-id">-->
+            <!--{{ pd.tenantId }}-->
+            <!--</td>-->
+
+            <!-- Multi-Tenancy -->
+            <td class="availability">
+              <div ng-if="tenantIds.indexOf(pd.tenantId) >= 0">
+                Available
+                <button name="suspend" ng-click="suspend(pd)">Suspend</button>
+              </div>
+              <div ng-if="tenantIds.indexOf(pd.tenantId) < 0">
+                Unavailable
+                <button name="deploy" ng-click="deploy(pd)">Deploy</button>
+              </div>
+            </td>
+
+            <td ng-if="hasHistoryPlugin"
+                class="history-link">
+              <a href="#/process-definition/{{ pd.id }}/history">
+                History view
+              </a>
+            </td>
+
+            <td ng-if="hasReportPlugin"
+                class="report-link">
+              <a href="#/reports/?processDefinitionKey={{ pd.key }}">
+                <span class="glyphicon glyphicon-signal"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </tab><!-- / list tab -->
+
+    <tab heading="Previews"
+         select="selectTab('previews')">
+      <div class="tile-grid">
+        <div ng-repeat="pd in processDefinitionData | orderBy:orderByPredicate:orderByReverse"
+             class="tile">
+          <a href="#/process-definition/{{ pd.id }}">
+            <h4 class="tile-header">
+              {{ pd.name || pd.key }}
+            </h4>
+
+            <span class="tile-body">
+              <span ng-if="selected === 'previews'"
+                    process-diagram-preview
+                    process-definition-id="pd.id"></span>
+            </span>
+
+            <span class="tile-footer">
+              <span ng-if="pd.instances >= 0" class="instances">
+                {{ (pd.instances < 1 ? 'No' : pd.instances) }}
+                running
+                {{ ((pd.instances === 1 || pd.instances === '1') ? 'instance' : 'instances') }}
+              </span>
+              <span ng-if="pd.instances == undefined" class="instances">
+                <span class="glyphicon glyphicon-refresh animate-spin"></span>
+              </span>
+
+              <span ng-if="pd.incidents.length > -1" state-circle
+                    incidents="pd.incidents"
+                    class="circle-tiles"></span>
+              <span ng-if="pd.incidents == undefined" class="circle-tiles"></span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </tab><!-- grid tab -->
+  </tabset>
+
+  <h3 ng-if="!processDefinitionData || !processDefinitionData.length">
+    No process definitions deployed
+  </h3>
+
+</div>
+<!-- / CE - ui/cockpit/plugins/base/app/views/processesDashboard/process-definitions.html -->
