@@ -1,0 +1,30 @@
+<settings>
+  <servers>
+    <server>
+      <id>camunda</id>
+      <username>tomcat</username>
+      <password>tomcat</password>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>camunda-bpm</id>
+      <repositories>
+        <repository>
+          <id>camunda-bpm-nexus</id>
+          <name>camunda-bpm-nexus</name>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <url>https://app.camunda.com/nexus/content/groups/public</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>camunda-bpm</activeProfile>
+  </activeProfiles>
+</settings>

@@ -1,0 +1,16 @@
+---
+- name: Ensure MySQL user for camunda are present.
+  mysql_user:
+    name: camunda
+    host: 192.168.178.2
+    password: camunda
+    priv: "*.*:ALL"
+    state: present
+  no_log: false
+
+- name: Ensure Camunda databases are present.
+  mysql_db:
+    name: camundabpm
+    collation: utf8_general_ci
+    encoding: utf8
+    state: present

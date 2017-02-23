@@ -1,0 +1,56 @@
+---
+- name: add group "tomcat"
+  group: name=tomcat
+
+- name: add user "tomcat"
+  user: name=tomcat group=tomcat home=/usr/share/tomcat createhome=no
+
+- name: Download Camunda
+  get_url: url={{CAMUNDA_DL_URL}}{{CAMUNDA_FILE_NAME}}.tar.gz dest=/tmp/{{CAMUNDA_FILE_NAME}}.tar.gz
+
+- name: Make Directory for Camunda
+  file: path=/opt/{{CAMUNDA_FILE_NAME}}/ state=directory owner=tomcat
+
+- name: Install Camunda
+  unarchive: src=/tmp/{{CAMUNDA_FILE_NAME}}.tar.gz dest=/opt/{{CAMUNDA_FILE_NAME}}/ copy=no creates=/opt/{{CAMUNDA_FILE_NAME}}/server/{{TOMCAT_NAME}}
+
+- name: Symlink install directory
+  file: src=/opt/{{CAMUNDA_FILE_NAME}}/server/{{TOMCAT_NAME}} path=/usr/share/tomcat state=link
+
+- name: Change ownership of Tomcat installation
+  file: path=/usr/share/tomcat/ owner=tomcat group=tomcat state=directory recurse=yes
+
+- name: Download JDBC Driver
+  get_url: url={{JDBC_DRIVER_URL}}{{JDBC_DRIVER_FILE_NAME}} dest=/usr/share/tomcat/lib/{{JDBC_DRIVER_FILE_NAME}}
+
+- name: Configure Tomcat server
+  template: src=server.xml dest=/usr/share/tomcat/conf/
+  notify: restart tomcat
+
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml dest=/usr/share/tomcat/conf/
+  notify: restart tomcat
+
+# - name: Delete webapps (camunda)
+#   file: path=/usr/share/tomcat/webapps/camunda state=absent
+
+# - name: Delete webapps (camunda-invoice)
+#   file: path=/usr/share/tomcat/webapps/camunda-invoice state=absent
+
+- name: Delete webapps (camunda-welcome)
+  file: path=/usr/share/tomcat/webapps/camunda-welcome state=absent
+
+- name: Delete webapps (docs)
+  file: path=/usr/share/tomcat/webapps/docs state=absent
+
+- name: Delete webapps (examples)
+  file: path=/usr/share/tomcat/webapps/examples state=absent
+
+- name: Delete webapps (h2)
+  file: path=/usr/share/tomcat/webapps/h2 state=absent
+
+- name: Install Tomcat init script
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes

@@ -1,0 +1,9 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% include "security/_messages.html" %}
+<h1>Welcome</h1>
+<p>{{ current_user.last_name }} {{ current_user.first_name }}</p>
+<ul>
+  <li><a href="/edit">Edit User Information</a></li>
+  <li><a href="/change">Change password</a></li>
+  <li><a href="/logout">Logout</a></li>
+</ul>

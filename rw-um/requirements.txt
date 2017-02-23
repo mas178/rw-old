@@ -1,0 +1,4 @@
+Flask-Security==1.7.5
+Flask-Mongoengine==0.7.5
+Requests==2.10.0
+Coverage==4.1

@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+VAGRANTFILE_API_VERSION = 2
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "web" do |node|
+    node.vm.box = "bento/centos-7.2"
+    node.vm.hostname = "web"
+    node.vm.network :private_network, ip: "192.168.178.2"
+    node.vm.synced_folder "./camunda", "/home/vagrant/camunda", create: true, group: 'vagrant', owner: 'vagrant'
+  end
+
+  config.vm.define "db" do |node|
+    node.vm.box = "bento/centos-7.2"
+    node.vm.hostname = "db"
+    node.vm.network :private_network, ip: "192.168.178.3"
+  end
+
+  config.vm.define "host" do |node|
+    node.vm.box = "bento/centos-7.2"
+    node.vm.hostname = "host"
+    node.vm.network :private_network, ip: "192.168.178.4"
+    node.vm.provision :file, source: "./ansible", destination: "/home/vagrant/"
+    node.vm.provision :shell, path: "./vagrant/vagrant_provision.sh", privileged: false
+    node.vm.provision :ansible do |ansible|
+      ansible.limit = 'all'
+      ansible.playbook = "ansible/site.yml"
+    end
+  end
+end

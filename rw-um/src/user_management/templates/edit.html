@@ -1,0 +1,10 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% include "security/_messages.html" %}
+<h1>Edit</h1>
+<form action="{{ url_for('edit') }}" method="POST">
+  <p>E-Mail (User ID): {{ current_user.email }}</p>
+  <p>First Name: <input type=text size=30 name=first_name value="{{ current_user.first_name }}"></p>
+  <p>Last Name: <input type=text size=30 name=last_name value="{{ current_user.last_name }}"></p>
+  <p>Tenant Name: <input type=text size=30 name=tenant_name value="{{ current_user.tenant.name }}"></p>
+  <input type="submit" value="edit">
+</form>

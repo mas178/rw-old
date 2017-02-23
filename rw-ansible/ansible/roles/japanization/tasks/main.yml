@@ -1,0 +1,6 @@
+---
+- name: config.js
+  copy: src=config.js dest=/usr/share/tomcat/webapps/camunda/app/tasklist/scripts/config.js
+
+- name: ja.json
+  copy: src=ja.json dest=/usr/share/tomcat/webapps/camunda/app/tasklist/locales/ja.json

@@ -1,0 +1,9 @@
+CAMUNDA_DL_URL: https://camunda.org/release/camunda-bpm/tomcat/7.5/
+CAMUNDA_FILE_NAME: camunda-bpm-tomcat-7.5.0
+TOMCAT_NAME: apache-tomcat-8.0.24
+JDBC_DRIVER_URL: https://downloads.mariadb.com/enterprise/22bq-phpn/connectors/java/connector-java-1.4.4/
+JDBC_DRIVER_FILE_NAME: mariadb-java-client-1.4.4.jar
+manager_gui_username: manager_gui
+manager_script_username: manager_script
+admin_gui_username: admin_gui
+tomcat_password: tomcat

@@ -1,0 +1,6 @@
+- name: install nginx
+  yum: name=nginx state=present
+- name: start nginx and enabled
+  service: name=nginx state=started enabled=yes
+- name: change owner
+  file: dest=/usr/share/nginx/html owner=vagrant state=directory recurse=yes
